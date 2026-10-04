@@ -34,3 +34,22 @@ HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/
 {"time": "2026-10-05T02:01:01.968401", "input": "logs/audio/What's up What are the recent news about Donald Trump.wav", "output": " What's up? What are the recent news about Donald Trump?", "latency": "135 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
 {"time": "2026-10-05T02:01:16.196848", "input": "logs/audio/What's it on Moscow doing this taste.wav", "output": " What's it on Moscow doing this taste?", "latency": "106 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
 {"time": "2026-10-05T02:01:28.942939", "input": "logs/audio/I am asking about alone Musk these days..wav", "output": " I am asking about alone Musk these days.", "latency": "120 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+HTTP Request: GET https://huggingface.co/api/models/distil-whisper/distil-small.en "HTTP/1.1 200 OK"
+HTTP Request: GET https://huggingface.co/api/models/distil-whisper/distil-small.en/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+HTTP Request: GET https://huggingface.co/api/models/distil-whisper/distil-small.en/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: GET http://127.0.0.1:7680/gradio_api/startup-events "HTTP/1.1 200 OK"
+HTTP Request: HEAD http://127.0.0.1:7680/ "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/v3/tunnel-request "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://3f7f7f6e89322b5f8e.gradio.live "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-launched-telemetry "HTTP/1.1 200 OK"
+{"time": "2026-10-05T02:26:22.887077", "input": "logs/audio/Well tell me some news about Tom Cruise..wav", "output": " Well tell me some news about Tom Cruise.", "latency": "629 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+{"time": "2026-10-05T02:26:44.373939", "input": "logs/audio/What's up with Trump these days.wav", "output": " What's up with Trump these days?", "latency": "119 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+{"time": "2026-10-05T02:27:09.055247", "input": "logs/audio/What's up with Trump these days 2.wav", "output": " What's up with Trump these days?", "latency": "109 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
