@@ -1,0 +1,36 @@
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: GET http://127.0.0.1:7680/gradio_api/startup-events "HTTP/1.1 200 OK"
+HTTP Request: HEAD http://127.0.0.1:7680/ "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/v3/tunnel-request "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://07593b04ae7bc42795.gradio.live "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-launched-telemetry "HTTP/1.1 200 OK"
+{"time": "2026-10-05T01:55:30.869390", "input": "logs/audio/Show me some news about Donald Trump..wav", "output": " Show me some news about Donald Trump.", "latency": "618 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+{"time": "2026-10-05T01:55:54.553067", "input": "logs/audio/Show me some shows from Amazon.com.wav", "output": " Show me some shows from Amazon.com", "latency": "120 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+{"time": "2026-10-05T01:56:57.494375", "input": "logs/audio/What is the news about Burakamah recently.wav", "output": " What is the news about Burakamah recently?", "latency": "134 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+HTTP Request: GET https://huggingface.co/api/models/distil-whisper/distil-small.en "HTTP/1.1 200 OK"
+HTTP Request: GET https://huggingface.co/api/models/distil-whisper/distil-small.en/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+HTTP Request: GET https://huggingface.co/api/models/distil-whisper/distil-small.en/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: GET http://127.0.0.1:7680/gradio_api/startup-events "HTTP/1.1 200 OK"
+HTTP Request: HEAD http://127.0.0.1:7680/ "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-initiated-analytics "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/pkg-version "HTTP/1.1 200 OK"
+HTTP Request: GET https://api.gradio.app/v3/tunnel-request "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://5cda3e8e598d488740.gradio.live "HTTP/1.1 200 OK"
+HTTP Request: HEAD https://huggingface.co/api/telemetry/https%3A/api.gradio.app/gradio-launched-telemetry "HTTP/1.1 200 OK"
+{"time": "2026-10-05T02:00:33.758258", "input": "logs/audio/Show me some t-shirts from Amazon.com.wav", "output": " Show me some t-shirts from Amazon.com", "latency": "604 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+{"time": "2026-10-05T02:01:01.968401", "input": "logs/audio/What's up What are the recent news about Donald Trump.wav", "output": " What's up? What are the recent news about Donald Trump?", "latency": "135 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+{"time": "2026-10-05T02:01:16.196848", "input": "logs/audio/What's it on Moscow doing this taste.wav", "output": " What's it on Moscow doing this taste?", "latency": "106 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
+{"time": "2026-10-05T02:01:28.942939", "input": "logs/audio/I am asking about alone Musk these days..wav", "output": " I am asking about alone Musk these days.", "latency": "120 ms", "model": "distil-whisper/distil-small.en", "hardware": "local gpu"}
