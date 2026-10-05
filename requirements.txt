@@ -5,3 +5,4 @@ sentence-transformers==6.1.0
 gliner==0.2.29
 tiktoken==0.14.0
 protobuf==7.36.2
+python-dotenv==1.2.4
