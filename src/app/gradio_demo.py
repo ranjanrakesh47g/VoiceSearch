@@ -1,5 +1,4 @@
 import gradio as gr
-
 from src.app.pipeline import VoiceSearchPipeline
 
 

@@ -1,7 +1,5 @@
 from datetime import datetime
-
 from sentence_transformers import SentenceTransformer, util
-
 from .search import PDP_PATH
 from .voice_search_model import jsonify
 

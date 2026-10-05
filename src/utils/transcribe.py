@@ -1,10 +1,8 @@
 import os
 import shutil
 from datetime import datetime
-
 import gradio as gr
 from transformers import pipeline
-
 from .voice_search_model import jsonify
 
 

@@ -1,8 +1,6 @@
 import os
 import tempfile
-
 from fastapi import FastAPI, File, HTTPException, UploadFile
-
 from src.app.pipeline import VoiceSearchPipeline
 
 app = FastAPI()

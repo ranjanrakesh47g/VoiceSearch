@@ -1,16 +1,11 @@
 import os
-
 from dotenv import load_dotenv
+from src.utils.logging_setup import setup_logging
+import uvicorn
+from src.app.api import app
 
 load_dotenv()
-
-from src.utils.logging_setup import setup_logging
-
 setup_logging()
-
-import uvicorn
-
-from src.app.api import app
 
 
 def main():
