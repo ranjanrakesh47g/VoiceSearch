@@ -1,4 +1,5 @@
 from datetime import datetime
+import torch
 from sentence_transformers import SentenceTransformer, util
 from .search import PDP_PATH
 from .voice_search_model import jsonify
@@ -7,7 +8,7 @@ from .voice_search_model import jsonify
 class IntentDetector:
     def __init__(self):
         self.intent_model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2",
-                                                 device="cuda",
+                                                 device="cuda" if torch.cuda.is_available() else "cpu",
                                                  model_kwargs={"cache_dir": "models"})
         self.intents = ["news", "ecommerce"]
         stores = list(PDP_PATH)

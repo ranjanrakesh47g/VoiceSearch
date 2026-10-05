@@ -1,4 +1,5 @@
 from datetime import datetime
+import torch
 from gliner import GLiNER
 from sentence_transformers import util
 from .voice_search_model import jsonify
@@ -15,7 +16,7 @@ class QueryExtractor:
         self.intents = intent_detector.intents
         self.intent_emb = intent_detector.intent_emb
         self.ner_model = GLiNER.from_pretrained("urchade/gliner_small-v2.1",
-                                                 map_location="cuda",
+                                                 map_location="cuda" if torch.cuda.is_available() else "cpu",
                                                  cache_dir="models")
 
     def extract_query(self, voice_search):

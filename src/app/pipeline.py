@@ -37,7 +37,7 @@ class VoiceSearchPipeline:
             try:
                 self.searcher.search_results(voice_search)
             except Exception as error:
-                voice_search.search_results = str(error)
+                voice_search.search_results = [{"error": str(error)}]
                 parts = [voice_search.latency_transcription, voice_search.latency_intent_detection, voice_search.latency_query_extraction]
                 voice_search.latency_overall = f"{sum(int(part.split()[0]) for part in parts if part)} ms"
 
