@@ -1,0 +1,7 @@
+.venv
+.git
+logs
+models
+.gradio
+**/__pycache__
+*.ipynb
