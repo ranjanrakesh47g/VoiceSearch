@@ -1,24 +1,34 @@
 # VoiceSearch
 
-## APIs
-Health Check API (GET): http://127.0.0.1:7680/health_check
+Speech query API. A `.wav` file is transcribed, then searched as news or a product.
 
-Voice Search API (POST): http://127.0.0.1:7680/voice_search
+## API
 
-For Voice Search API:
-    - Open Body and choose form-data.
-    - Set the key name to file, type to File.
-    - Choose/Upload .wav file.
+Base URL: `http://127.0.0.1:7680`
 
-## Steps for Local Setup
+| Method | Path | Body |
+| --- | --- | --- |
+| GET | `/health_check` | none |
+| POST | `/voice_search` | form-data field `file`, type File, a `.wav` |
+
+`/health_check` returns `{"status": "ok"}`.
+
+`/voice_search` returns json having the transcription, intent, searchable query, results, and latencies.
+
+## Local
+
 ```bash
-python3.12 -m venv .venv; source .venv/bin/activate
+python3.12 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 python -m src.app.main
 ```
 
-## Steps for Running Docker
-```
+## Docker
+
+Requires an NVIDIA GPU and a `.env` file (used for product search).
+
+```bash
 docker build -t voicesearch .
 docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --env-file .env -p 7680:7680 voicesearch
 ```
