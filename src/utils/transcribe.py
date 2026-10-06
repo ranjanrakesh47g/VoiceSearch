@@ -1,9 +1,25 @@
+import asyncio
 import os
 import shutil
 from datetime import datetime
 import gradio as gr
+import yaml
 from transformers import pipeline
 from .voice_search_model import jsonify
+import librosa
+import numpy as np
+from amazon_transcribe.client import TranscribeStreamingClient
+from amazon_transcribe.handlers import TranscriptResultStreamHandler
+from dotenv import load_dotenv
+from amazon_transcribe.auth import StaticCredentialResolver
+
+load_dotenv()
+
+ASR_MODELS = {
+    "whisper-small": "distil-whisper/distil-small.en",
+    "whisper-large": "openai/whisper-large-v3",
+    "parakeet": "ai-and-i-project/parakeet-tdt-0.6b-v2-hf",
+}
 
 
 def save_audio(filepath, text):
@@ -27,12 +43,71 @@ def save_audio(filepath, text):
     return os.path.relpath(dest)
 
 
+def run_async(coro):
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        return asyncio.run(coro)
+    import concurrent.futures
+    with concurrent.futures.ThreadPoolExecutor(1) as pool:
+        return pool.submit(asyncio.run, coro).result()
+
+
+class AmazonTranscribe:
+    name = "amazon-transcribe"
+    hardware = "aws"
+
+    def __call__(self, filepath):
+        audio, _ = librosa.load(filepath, sr=16000, mono=True)
+        pcm = (np.clip(audio, -1, 1) * 32767).astype("<i2").tobytes()
+        lines = []
+
+        class Handler(TranscriptResultStreamHandler):
+            async def handle_transcript_event(self, event):
+                for result in event.transcript.results:
+                    if not result.is_partial and result.alternatives:
+                        lines.append(result.alternatives[0].transcript)
+
+        async def transcribe():
+            access_key = os.getenv("AWS_ACCESS_KEY_ID")
+            secret_key = os.getenv("AWS_SECRET_ACCESS_KEY")
+            region = os.getenv("AWS_DEFAULT_REGION")
+            client = TranscribeStreamingClient(
+                region=region,
+                credential_resolver=StaticCredentialResolver(access_key, secret_key, os.getenv("AWS_SESSION_TOKEN")),
+            )
+            stream = await client.start_stream_transcription(language_code="en-US", media_sample_rate_hz=16000, media_encoding="pcm")
+
+            async def send():
+                await stream.input_stream.send_audio_event(audio_chunk=pcm)
+                await stream.input_stream.end_stream()
+
+            await asyncio.gather(send(), Handler(stream.output_stream).handle_events())
+            return " ".join(lines)
+
+        return {"text": run_async(transcribe())}
+
+
+def configured_asr_model():
+    path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "config.yml"))
+    with open(path) as config_file:
+        config = yaml.safe_load(config_file) or {}
+    asr_model = config.get("asr_model")
+    return asr_model
+
+
 class Transcriber:
-    def __init__(self):
-        self.asr = pipeline(task="automatic-speech-recognition",
-                            model="distil-whisper/distil-small.en",
-                            model_kwargs={"cache_dir": "models"})
-        print("asr_freq:", self.asr.feature_extractor.sampling_rate)
+    def __init__(self, model=None):
+        asr_model = model or configured_asr_model()
+        if asr_model == "aws":
+            self.asr = AmazonTranscribe()
+        else:
+            self.asr = pipeline(task="automatic-speech-recognition",
+                                model=ASR_MODELS[asr_model],
+                                model_kwargs={"cache_dir": "models"})
+        print("asr:", getattr(self.asr, "name", None) or self.asr.model.name_or_path)
+        if getattr(self.asr, "feature_extractor", None):
+            print("asr_freq:", self.asr.feature_extractor.sampling_rate)
 
     def transcribe_speech(self, voice_search):
         filepath = voice_search.user_query_audio

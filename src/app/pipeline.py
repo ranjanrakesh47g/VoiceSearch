@@ -12,6 +12,8 @@ voice_search_logger = setup_logging()
 
 
 def inference_hardware(asr):
+    if getattr(asr, "hardware", None):
+        return asr.hardware
     on_gpu = asr.device.type == "cuda"
     in_colab = "COLAB_RELEASE_TAG" in os.environ
     if on_gpu and in_colab:
@@ -42,6 +44,7 @@ class VoiceSearchPipeline:
                 voice_search.latency_overall = f"{sum(int(part.split()[0]) for part in parts if part)} ms"
 
         voice_search_logger.info(json.dumps({"time": datetime.now().isoformat(), **voice_search.__dict__,
-                                             "model": self.transcriber.asr.model.name_or_path, "hardware": inference_hardware(self.transcriber.asr)}))
+                                             "model": getattr(self.transcriber.asr, "name", None) or self.transcriber.asr.model.name_or_path,
+                                             "hardware": inference_hardware(self.transcriber.asr)}))
         voice_search_logger.info("")
         return voice_search

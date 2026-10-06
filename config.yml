@@ -1,0 +1,2 @@
+# ASR Model: whisper-small, whisper-large, parakeet, or aws
+asr_model: parakeet
