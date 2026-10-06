@@ -1,4 +1,6 @@
+import os
 import gradio as gr
+from dotenv import load_dotenv
 from src.app.asr_comparison.compare_utils import MODELS, compare
 
 
@@ -28,3 +30,16 @@ def build_demo():
             with gr.Tab("Transcribe Audio File"):
                 ui("upload")
     return demo
+
+
+def main():
+    load_dotenv()
+    demo = build_demo()
+    if os.getenv("COLAB_RELEASE_TAG"):
+        demo.launch(share=True, debug=True)
+    else:
+        demo.launch(share=True, server_name="0.0.0.0", server_port=7681)
+
+
+if __name__ == "__main__":
+    main()

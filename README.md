@@ -4,7 +4,9 @@ Speech query API. A `.wav` file is transcribed, then searched as news or a produ
 
 ## Voice search API
 
-Base URL: `http://127.0.0.1:7680`
+Gradio UI: `http://127.0.0.1:7680`
+
+FastAPI Base URL: `http://127.0.0.1:7680`
 
 
 | Method | Path            | Body                                        |
@@ -19,7 +21,9 @@ Base URL: `http://127.0.0.1:7680`
 
 ## ASR comparison API
 
-Base URL: `http://127.0.0.1:7681`
+Gradio UI: `http://127.0.0.1:7681`
+
+FastAPI Base URL: `http://127.0.0.1:7681`
 
 
 | Method | Path            | Body                                        |
@@ -38,16 +42,28 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Voice search:
+Voice search Gradio UI:
 
 ```bash
-python -m src.app.main
+python -m src.app.gradio_demo
 ```
 
-ASR comparison:
+Voice search FastAPI:
 
 ```bash
-python -m src.app.asr_comparison.main
+python -m src.app.api
+```
+
+ASR comparison Gradio UI:
+
+```bash
+python -m src.app.asr_comparison.gradio_demo
+```
+
+ASR comparison FastAPI:
+
+```bash
+python -m src.app.asr_comparison.api
 ```
 
 
@@ -60,16 +76,27 @@ Requires an NVIDIA GPU and a `.env` file. Voice search uses it for product searc
 docker build -t voicesearch .
 ```
 
-Voice search:
+Voice search Gradio UI:
+
+```bash
+docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --env-file .env -p 7680:7680 voicesearch gradio
+```
+
+Voice search FastAPI:
 
 ```bash
 docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --env-file .env -p 7680:7680 voicesearch
 ```
 
-ASR comparison:
+ASR comparison Gradio UI:
+
+```bash
+docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --env-file .env -p 7681:7681 voicesearch asr_comparison_gradio
+```
+
+ASR comparison FastAPI:
 
 ```bash
 docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --env-file .env -p 7681:7681 voicesearch asr_comparison
 ```
 
-Both containers can run at the same time, one container each.

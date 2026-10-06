@@ -1,7 +1,10 @@
 import os
 import tempfile
+from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile
+import uvicorn
 from src.app.asr_comparison.compare_utils import compare
+from src.utils.logging_setup import setup_logging
 
 app = FastAPI()
 
@@ -25,3 +28,13 @@ async def compare_audio(file: UploadFile = File(...)):
         return compare(path)
     finally:
         os.remove(path)
+
+
+def main():
+    load_dotenv()
+    setup_logging()
+    uvicorn.run(app, host="127.0.0.1", port=int(os.environ.get("PORT2", 7681)))
+
+
+if __name__ == "__main__":
+    main()

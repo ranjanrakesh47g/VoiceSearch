@@ -1,7 +1,10 @@
 import os
 import tempfile
+from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile
+import uvicorn
 from src.app.pipeline import VoiceSearchPipeline
+from src.utils.logging_setup import setup_logging
 
 app = FastAPI()
 pipeline = VoiceSearchPipeline()
@@ -27,3 +30,13 @@ async def voice_search(file: UploadFile = File(...)):
     finally:
         os.remove(path)
     return result.__dict__
+
+
+def main():
+    load_dotenv()
+    setup_logging()
+    uvicorn.run(app, host="127.0.0.1", port=int(os.environ.get("PORT1", 7680)))
+
+
+if __name__ == "__main__":
+    main()
