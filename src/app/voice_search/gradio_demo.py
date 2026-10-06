@@ -34,7 +34,12 @@ def build_demo(pipeline=None):
             gr.JSON(label="Search results"),
             gr.Textbox(label="Overall latency"),
         ]
+        
+        def reset_labels():
+            return tuple(gr.update(label=component.label) for component in outputs)
+
         clear.add([audio, *outputs])
+        clear.click(reset_labels, outputs=outputs)
         if sources == "microphone":
             audio.stop_recording(run_voice_search, inputs=audio, outputs=outputs)
         else:
