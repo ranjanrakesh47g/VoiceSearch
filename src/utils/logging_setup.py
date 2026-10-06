@@ -12,4 +12,12 @@ def setup_logging():
         handler = logging.FileHandler("logs/voice_search.log")
         handler.setFormatter(logging.Formatter("%(message)s"))
         logger.addHandler(handler)
+        
+    comparison_logger = logging.getLogger("asr_comparison")
+    comparison_logger.propagate = False
+    comparison_logger.setLevel(logging.INFO)
+    if not comparison_logger.handlers:
+        handler = logging.FileHandler("logs/asr_comparison.log")
+        handler.setFormatter(logging.Formatter("%(message)s"))
+        comparison_logger.addHandler(handler)
     return logger

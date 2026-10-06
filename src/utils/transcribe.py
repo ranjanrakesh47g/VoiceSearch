@@ -22,10 +22,10 @@ ASR_MODELS = {
 }
 
 
-def save_audio(filepath, text):
+def save_audio(filepath, text, audio_dir="logs/audio_voice_search"):
     if filepath is None:
         return None
-    audio_dir = os.path.abspath("logs/audio")
+    audio_dir = os.path.abspath(audio_dir)
     os.makedirs(audio_dir, exist_ok=True)
     src = os.path.abspath(filepath)
     stem = "".join(c for c in text.strip() if c.isalnum() or c in " ,.'-")[:80].strip() or "audio"
