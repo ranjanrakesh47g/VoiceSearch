@@ -45,13 +45,13 @@ pip install -r requirements.txt
 Voice search Gradio UI:
 
 ```bash
-python -m src.app.gradio_demo
+python -m src.app.voice_search.gradio_demo
 ```
 
 Voice search FastAPI:
 
 ```bash
-python -m src.app.api
+python -m src.app.voice_search.api
 ```
 
 ASR comparison Gradio UI:

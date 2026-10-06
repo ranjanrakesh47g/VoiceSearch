@@ -3,7 +3,7 @@ import tempfile
 from dotenv import load_dotenv
 from fastapi import FastAPI, File, HTTPException, UploadFile
 import uvicorn
-from src.app.pipeline import VoiceSearchPipeline
+from src.app.voice_search.pipeline import VoiceSearchPipeline
 from src.utils.logging_setup import setup_logging
 
 app = FastAPI()

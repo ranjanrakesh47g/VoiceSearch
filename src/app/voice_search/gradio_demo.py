@@ -1,7 +1,7 @@
 import os
 import gradio as gr
 from dotenv import load_dotenv
-from src.app.pipeline import VoiceSearchPipeline
+from src.app.voice_search.pipeline import VoiceSearchPipeline
 
 
 def build_demo(pipeline=None):
