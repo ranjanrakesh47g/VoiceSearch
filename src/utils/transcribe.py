@@ -22,7 +22,7 @@ ASR_MODELS = {
 }
 
 
-def save_audio(filepath, text, audio_dir="logs/audio_voice_search"):
+def save_audio(filepath, text, audio_dir="logs/audio"):
     if filepath is None:
         return None
     audio_dir = os.path.abspath(audio_dir)
