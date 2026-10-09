@@ -31,6 +31,8 @@ Intent Detection is done using the embedding model `sentence-transformers/all-Mi
 - `news`: a request for recent news or headlines about a person or topic
 - `ecommerce`: a request to shop for a product
 
+
+
 ## Searchable Query Extraction
 
 The searchable phrase is extracted with open-vocabulary ner model `urchade/gliner_small-v2.1`. Entity labels depend on the detected intent:
@@ -44,43 +46,24 @@ When several spans are found, the span closest to both the transcript and the se
 
 News queries are sent to the Google News RSS feed. The response contains up to five items, each with a title and a URL.
 
-Product queries are sent to the Brave Search API and require `BRAVE_API_KEY` in `.env`. The transcript is scanned for a store name. When one is found, the query is restricted to that site and to a product-page path for Amazon, eBay, Walmart, Target, Best Buy, Etsy, Flipkart, or Myntra. The response contains up to five items, each with a title, a URL, and a description. If the search request fails, the result is a single item whose `error` field contains the failure message.
+Product queries are sent to the Brave Search API and require `BRAVE_API_KEY` in `.env`. The transcript is scanned for a store name. When one is found, the query is restricted to that site and to a product-page path for the specified store like Amazon, Ebay etc. The response contains up to five items, each with a title, a URL, and a description.
+
+
 
 ## Interfaces
 
-The Gradio UI and the FastAPI service both use port `7680`. Run one at a time. Open the Gradio UI at `http://127.0.0.1:7680`. The process also prints a temporary public URL; use the local address.
+The Gradio UI and the FastAPI service both use port `7680`. Run one at a time.
 
-The microphone tab runs the pipeline when recording stops. The file tab runs it when a `.wav` file is uploaded. The page shows the transcript, intent, searchable query, search results, and latencies.
+- **Gradio** is at `http://127.0.0.1:7680`. The microphone tab runs the pipeline when recording stops, and the file tab runs it when a `.wav` file is uploaded. The page shows the transcript, intent, searchable query, search results, and latencies.
+- **FastAPI** is at `http://127.0.0.1:7680`.
 
-The FastAPI base URL is `http://127.0.0.1:7680`. The local port can be changed with `PORT1`.
+  | Method | Path            | Body                                  |
+  | ------ | --------------- | ------------------------------------- |
+  | GET    | `/health_check` | none                                  |
+  | POST   | `/voice_search` | form-data field `file`, a `.wav` file |
 
-
-| Method | Path            | Body                                  |
-| ------ | --------------- | ------------------------------------- |
-| GET    | `/health_check` | none                                  |
-| POST   | `/voice_search` | form-data field `file`, a `.wav` file |
-
-
-`/health_check` returns `{"status": "ok"}`.
-
-`/voice_search` rejects a missing, empty, or non-`.wav` file with HTTP 400. A successful response contains:
-
-
-| Field                      | Description                                                    |
-| -------------------------- | -------------------------------------------------------------- |
-| `user_query_audio`         | Path of the saved recording, relative to the working directory |
-| `user_query_text`          | Transcript                                                     |
-| `intent`                   | `news` or `ecommerce`                                          |
-| `searchable_query`         | Phrase used for search                                         |
-| `search_results`           | List of result objects                                         |
-| `latency_transcription`    | Transcription time, in milliseconds                            |
-| `latency_intent_detection` | Intent detection time, in milliseconds                         |
-| `latency_query_extraction` | Query extraction time, in milliseconds                         |
-| `latency_search`           | Search time, in milliseconds                                   |
-| `latency_overall`          | Sum of the stage times, in milliseconds                        |
-
-
-`voice_search.ipynb` walks through the same stages and can launch the Gradio UI locally or in Google Colab. In Colab, the UI is exposed with a temporary public link.
+  - `/health_check` returns `{"status": "ok"}`.
+  - `/voice_search` rejects a missing, empty, or non-`.wav` file with HTTP 400. A successful response returns the saved recording path, transcript, intent (`news` or `ecommerce`), searchable phrase, and relevant search results, along with the latencies (stage-wise as well as overall).
 
 ## Local setup
 
@@ -92,7 +75,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in the project root. Set `BRAVE_API_KEY` for product search. Set the AWS variables above only when `asr_model` is `aws`.
+Create a `.env` file in the project root. Set `BRAVE_API_KEY` for product search.
 
 Gradio UI:
 
@@ -106,11 +89,9 @@ FastAPI:
 python -m src.app.api
 ```
 
-
-
 ## Docker
 
-The image is based on Python 3.12 and includes FFmpeg. An NVIDIA GPU and a `.env` file are required. The `.env` file supplies `BRAVE_API_KEY` for product search.
+An NVIDIA GPU and a `.env` file are required. The `.env` file supplies `BRAVE_API_KEY` for product search.
 
 ```bash
 docker build -t voicesearch .
@@ -122,7 +103,7 @@ Gradio UI:
 docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --env-file .env -p 7680:7680 voicesearch gradio
 ```
 
-FastAPI, which is the image default:
+FastAPI:
 
 ```bash
 docker run --runtime=nvidia -e NVIDIA_VISIBLE_DEVICES=all --env-file .env -p 7680:7680 voicesearch
